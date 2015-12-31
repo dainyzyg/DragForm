@@ -36,6 +36,7 @@ Ext.define('extjsapp.PanelFieldDragZone', {
 //  object which contains our own data, plus a "ddel" property which is a DOM
 //  node which provides a "view" of the dragged data.
     getDragData: function (e) {
+        console.log('getDragData PanelFieldDragZone')
         var targetLabel = e.getTarget('label', null, true),
             oldMark,
             field,
@@ -50,11 +51,12 @@ Ext.define('extjsapp.PanelFieldDragZone', {
             // to the underlying dom element which can cause problems in IE
             oldMark = field.preventMark;
             field.preventMark = true;
-            if (field.isValid()) {
+            if (field.isValid()||true) {
                 field.preventMark = oldMark;
                 dragEl = document.createElement('div');
                 dragEl.className = 'x-form-text';
-                dragEl.appendChild(document.createTextNode(field.getRawValue()));
+                //dragEl.appendChild(document.createTextNode(field.getRawValue()));
+                dragEl.appendChild(document.createTextNode(''));
                 Ext.fly(dragEl).setWidth(field.getEl().getWidth());
                 return {
                     field: field,
@@ -69,6 +71,7 @@ Ext.define('extjsapp.PanelFieldDragZone', {
 
 //  The coordinates to slide the drag proxy back to on failed drop.
     getRepairXY: function () {
+        console.log('getRepairXY PanelFieldDragZone')
         return this.dragData.field.getEl().getXY();
     }
 });
