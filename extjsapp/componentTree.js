@@ -4,12 +4,12 @@
 Ext.define("extjsapp.componentTree", {
     xtype: 'extjsapp.componentTree',
     config: {
-        store:Ext.create('Ext.data.TreeStore', {
+        store: Ext.create('Ext.data.TreeStore', {
             root: {
                 //expanded: true,
                 children: [
-                    {text: "文本框", leaf: true},
-                    {text: "文本域", leaf: true},
+                    {text: "文本框", leaf: true, xtype: 'textfield'},
+                    {text: "文本域", leaf: true, xtype: 'textareafield'},
                     {text: "下拉菜单", leaf: true}
                 ]
             }
@@ -18,7 +18,7 @@ Ext.define("extjsapp.componentTree", {
         viewConfig: {
             plugins: [{
                 ddGroup: 'organizerDD',
-                ptype  : 'treeviewdragdrop',
+                ptype: 'treeviewdragdrop',
                 enableDrop: false,
                 displayField: 'text'
             }]
