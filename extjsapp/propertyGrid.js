@@ -9,6 +9,7 @@ Ext.define("extjsapp.propertyGrid", {
         sortableColumns: false,
         listeners: {
             propertychange(source, recordId, value, oldValue, eOpts) {
+                console.log('propertychange',source)
                 var fieldConfig = Object.assign({}, source)
                 var form = Ext.getCmp(this.dropFormID)
                 var index = form.items.items.findIndex(x => x.id == form.extraData.selectedItem.id)
@@ -16,9 +17,10 @@ Ext.define("extjsapp.propertyGrid", {
                 //form.extraData.selectedItem = null
                 var item = form.insert(index, fieldConfig)
                 //form.extraData.selectedItem = item
-                form.extraData.setSelectdeField(item)
+                form.extraData.setSelectedField(item)
             },
             beforecellclick(that, td, cellIndex, record, tr, rowIndex, e, eOpts){
+                console.log('beforecellclick',record.data.name)
                 var s = new Set()
                 s.add("xtype").add("id")
                 if (s.has(record.data.name)) {

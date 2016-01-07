@@ -9,10 +9,29 @@ Ext.define("extjsapp.dropForm", {
         }),
         listeners: {
             afterrender(e, eOpts){
-                this.extraData.createDropTarget(this)
+                var that = this
+                Ext.select('body').on('click', function () {
+                        console.log('body click')
+                        that.extraData.setSelectedField(null)
+                    },
+                    that,
+                    {
+                        delegate: '#' + that.id
+                    })
+                Ext.select('#' + that.id).on('click',
+                    function (e, t) {
+                        console.log('.x-field click')
+                        var item = that.getChildByElement(t.id)
+                        that.extraData.setSelectedField(item)
+                    },
+                    that,
+                    {
+                        delegate: '.x-field',
+                        stopEvent: true
+                    })
+                that.extraData.createDropTarget(that)
             }
-        },
-        items: []
+        }
         //items: [
         //    {
         //        xtype: 'image',
@@ -190,8 +209,8 @@ Ext.define("extjsapp.dropForm", {
         createDropTarget(form){
             this.parent.createDropTarget(form)
         },
-        setSelectdeField(item){
-            this.parent.setSelectdeField(item)
+        setSelectedField(item){
+            this.parent.setSelectedField(item)
         }
     },
     getFieldConfig(xtype) {
@@ -224,6 +243,26 @@ Ext.define("extjsapp.dropForm", {
                     },
                     margin: 3
                 }
+            case 'combo':
+                return {
+                    xtype: 'combo',
+                    id: '',
+                    fieldLabel: '下拉菜单',
+                    labelAlign: 'right',
+                    columnWidth: 0.5,
+                    allowBlank: true,
+                    labelWidth: 113,
+                    style: {
+                        border: '1px dashed transparent'
+                    },
+                    margin: 3,
+                    displayField: 'name',
+                    valueField: 'name',
+                    store: Ext.create('Ext.data.Store', {
+                        fields: ['name'],
+                        data: [{name: '下拉项1'}, {name: '下拉项2'}]
+                    })
+                }
         }
     },
     createDropTarget(form){
@@ -244,7 +283,7 @@ Ext.define("extjsapp.dropForm", {
                         var indexTo = form.items.items.findIndex(x => x.id == dropItem.id)
                         var indexFrom = form.items.items.findIndex(x => x.id == data.field.id)
                         form.move(indexFrom, indexTo)
-                        that.setSelectdeField(that.extraData.selectedItem)
+                        that.setSelectedField(that.extraData.selectedItem)
                     }
                 }
                 else {
@@ -261,7 +300,7 @@ Ext.define("extjsapp.dropForm", {
                     fieldConfig.id = itemNew.id
                     data.field = itemNew
                     that.extraData.fieldMap.set(itemNew.id, fieldConfig)
-                    that.setSelectdeField(itemNew)
+                    that.setSelectedField(itemNew)
                 }
                 return true
             },
@@ -270,7 +309,7 @@ Ext.define("extjsapp.dropForm", {
             }
         });
     },
-    setSelectdeField(item) {
+    setSelectedField(item) {
         var pGrid = Ext.getCmp(this.form.propertyGridID)
         if (this.extraData.selectedItem && this.extraData.selectedItem.getEl()) {
             this.extraData.selectedItem.getEl().dom.style.borderColor = 'transparent'
@@ -313,7 +352,7 @@ Ext.define("extjsapp.dropForm", {
             editImg.src = "extjs/icon/application_form_edit.png"
             editImg.style.cursor = 'pointer'
             editImg.onclick = ()=> {
-                that.setSelectdeField(item)
+                that.setSelectedField(item)
             }
             var deleteImg = document.createElement('img')
             deleteImg.src = "extjs/icon/delete.png"
@@ -339,23 +378,6 @@ Ext.define("extjsapp.dropForm", {
     constructor: function (cf) {
         var that = this
         this.form = Ext.create('Ext.form.Panel', Object.assign({}, this.config, cf))
-        Ext.select('body').on('click', function () {
-                that.setSelectdeField(null)
-            },
-            this,
-            {
-                delegate: '#' + this.form.id
-            })
-        Ext.select('body').on('click',
-            function (e, t) {
-                var item = that.form.getChildByElement(t.id)
-                this.setSelectdeField(item)
-            },
-            this,
-            {
-                delegate: '.x-field',
-                stopEvent: true
-            })
         this.extraData.parent = this
         this.form.extraData = this.extraData
         return this.form

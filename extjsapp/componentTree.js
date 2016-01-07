@@ -10,7 +10,7 @@ Ext.define("extjsapp.componentTree", {
                 children: [
                     {text: "文本框", leaf: true, xtype: 'textfield'},
                     {text: "文本域", leaf: true, xtype: 'textareafield'},
-                    {text: "下拉菜单", leaf: true}
+                    {text: "下拉菜单", leaf: true, xtype: 'combo'}
                 ]
             }
         }),
