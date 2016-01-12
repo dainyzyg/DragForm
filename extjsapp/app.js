@@ -1,7 +1,7 @@
 /**
  * Created by ad on 2015/12/30.
  */
-Ext.require(['extjsapp.componentTree', 'extjsapp.dropForm','extjsapp.propertyGrid'])
+Ext.require(['extjsapp.componentTree', 'extjsapp.dropForm', 'extjsapp.propertyGrid', 'extjsapp.fieldStore'])
 Ext.application({
     name: 'Extjs表单设计器',
     launch: function () {
@@ -25,7 +25,8 @@ Ext.application({
                     id: 'dropform',
                     xtype: 'extjsapp.dropForm',
                     title: '表单',
-                    propertyGridID:'fieldProperty',
+                    propertyGridID: 'fieldProperty',
+                    fieldStoreID: 'fieldStore',
                     collapsible: false,
                     layout: {
                         type: 'column',
@@ -39,15 +40,24 @@ Ext.application({
                     autoScroll: true,
                     region: 'east',
                     width: 300,
-                    layout: 'fit',
-                    //xtype: 'panel',
+                    layout: {
+                        type: 'vbox',
+                        align: 'stretch'
+                    },
                     collapsible: true,
                     items: [{
                         xtype: 'extjsapp.propertyGrid',
                         id: 'fieldProperty',
-                        dropFormID:'dropform'
-                    }
-                    ]
+                        dropFormID: 'dropform',
+                        fieldStoreID: 'fieldStore',
+                        minHeight: 200
+                    }, {
+                        title: '数据源',
+                        id: 'fieldStore',
+                        dropFormID: 'dropform',
+                        propertyGridID: 'fieldProperty',
+                        xtype: 'extjsapp.fieldStore'
+                    }]
                 }]
         })
     }
