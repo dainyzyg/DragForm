@@ -9,7 +9,6 @@ Ext.define("extjsapp.propertyGrid", {
         sortableColumns: false,
         listeners: {
             propertychange(source, recordId, value, oldValue, eOpts) {
-                console.log('propertychange', source)
                 this.parent.replaceFormComponent()
             },
             beforecellclick(that, td, cellIndex, record, tr, rowIndex, e, eOpts){
@@ -28,13 +27,10 @@ Ext.define("extjsapp.propertyGrid", {
         var index = form.items.items.findIndex(x => x.id == form.extraData.selectedItem.id)
         this.copyFieldStore(form.extraData.selectedItem, fieldConfig)
         form.remove(form.extraData.selectedItem)
-        console.log('replaceFormComponent', index, fieldConfig)
         var item = form.insert(index, fieldConfig)
-        console.log('item', item)
         form.extraData.setSelectedField(item)
     },
     copyFieldStore(oldItem, fieldConfig){
-        console.log('copyFieldStore', oldItem)
         switch (oldItem.xtype) {
             case 'combo':
             {

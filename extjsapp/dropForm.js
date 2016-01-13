@@ -4,6 +4,11 @@
 Ext.define("extjsapp.dropForm", {
     xtype: 'extjsapp.dropForm',
     config: {
+        //items:[{
+        //    border:0,
+        //    columnWidth: 1,
+        //    html:'<hr>'
+        //}],
         plugins: Ext.create('extjsapp.PanelFieldDragZone', {
             ddGroup: 'organizerDD'
         }),
@@ -11,7 +16,6 @@ Ext.define("extjsapp.dropForm", {
             afterrender(e, eOpts){
                 var that = this
                 Ext.select('body').on('click', function () {
-                        console.log('body click')
                         that.extraData.setSelectedField(null)
                         var fieldStore = Ext.getCmp(this.fieldStoreID)
                         fieldStore.parent.setData(null)
@@ -60,7 +64,7 @@ Ext.define("extjsapp.dropForm", {
                         border: '1px dashed transparent'
                     },
                     margin: 3,
-                    valueC: ''
+                    //valueC: ''
                 }
             case 'textareafield':
                 return {
@@ -86,13 +90,86 @@ Ext.define("extjsapp.dropForm", {
                     allowBlank: true,
                     labelWidth: 113,
                     margin: 3,
-                    valueC: '下拉项1',
+                    //valueC: '下拉项1',
                     style: {
                         border: '1px dashed transparent'
                     },
                     //displayField: 'name',
                     //valueField: 'name',
                     store: ['下拉项1', '下拉项2']
+                }
+            case 'datefield':
+                return {
+                    xtype: 'datefield',
+                    id: '',
+                    fieldLabel: '日期',
+                    labelAlign: 'right',
+                    columnWidth: 0.5,
+                    allowBlank: true,
+                    labelWidth: 113,
+                    margin: 3,
+                    format: 'Y/m/d',
+                    //valueC: '下拉项1',
+                    style: {
+                        border: '1px dashed transparent'
+                    }
+                }
+            case 'timefield':
+                return {
+                    xtype: 'timefield',
+                    id: '',
+                    fieldLabel: '时间',
+                    labelAlign: 'right',
+                    columnWidth: 0.5,
+                    allowBlank: true,
+                    labelWidth: 113,
+                    margin: 3,
+                    //valueC: '下拉项1',
+                    style: {
+                        border: '1px dashed transparent'
+                    }
+                }
+            case 'numberfield':
+                return {
+                    xtype: 'numberfield',
+                    id: '',
+                    fieldLabel: '数字',
+                    labelAlign: 'right',
+                    columnWidth: 0.5,
+                    allowBlank: true,
+                    editable: true,
+                    labelWidth: 113,
+                    margin: 3,
+                    style: {
+                        border: '1px dashed transparent'
+                    }
+                }
+            case 'fieldset':
+                return {
+                    xtype: 'fieldset',
+                    id: '',
+                    title: 'fieldset',
+                    minHeight: 300,
+                    collapsible: true,
+                    columnWidth: 1,
+                    items: [{
+                        xtype: 'numberfield',
+                        id: '',
+                        fieldLabel: '数字',
+                        labelAlign: 'right',
+                        columnWidth: 0.5,
+                        allowBlank: true,
+                        editable: true,
+                        labelWidth: 113,
+                        margin: 3,
+                        style: {
+                            border: '1px dashed transparent'
+                        }
+                    }],
+                    margin: 3,
+                    style: {
+                        border: '1px dashed transparent'
+                    }
                 }
         }
     },
