@@ -1,7 +1,11 @@
 /**
  * Created by ad on 2015/12/30.
  */
-Ext.require(['extjsapp.componentTree', 'extjsapp.dropForm', 'extjsapp.propertyGrid', 'extjsapp.fieldStore'])
+Ext.require(['extjsapp.componentTree',
+    'extjsapp.dropForm',
+    'extjsapp.propertyGrid',
+    'extjsapp.fieldStore',
+    'extjsapp.menuTopBar'])
 Ext.application({
     name: 'Extjs表单设计器',
     launch: function () {
@@ -10,26 +14,9 @@ Ext.application({
             items: [{
                 title: 'Extjs表单设计器',
                 xtype: 'panel',
-                tbar: [
-                    {
-                        xtype: 'button',
-                        text: '保存',
-                        icon:"extjs/icon/page_save.png"
-                    },'-',
-                    {
-                        xtype: 'button',
-                        text: '导出',
-                        icon:"extjs/icon/disk_download.png"
-                    },
-                    {
-                        xtype: 'splitbutton',
-                        text: 'Menu Button',
-                        glyph: 61,
-                        menu: [{
-                            text: 'Menu Button 1'
-                        }]
-                    }, '-'
-                ],
+                tbar: Ext.create('extjsapp.menuTopBar', {
+                    dropFormID: 'dropform'
+                }),
                 border: false,
                 layout: {
                     type: 'border',
